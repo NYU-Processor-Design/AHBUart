@@ -13,16 +13,11 @@ static void reset(VAHBUart& uart) {
 }
 
 TEST_CASE("AHBUart, reset") {
-  auto& uart {*(new VAHBUart)};
+  auto& uart {nyu::getDUT<VAHBUart>()};
 
   reset(uart);
 
   nyu::tick(uart, 50);
 
   REQUIRE(uart.tx == 1);
-}
-
-TEST_CASE("AHBUart") {
-  auto& uart {*(new VAHBUart)};
-  REQUIRE(1);
 }
