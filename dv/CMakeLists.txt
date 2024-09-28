@@ -15,10 +15,12 @@ add_subdirectory(loopback)
 nyu_target_verilate(tests
   TOP_MODULES AHBUart_tl
   ARGS COVERAGE
+  VERILATOR_ARGS -fno-table
 )
 nyu_target_verilate(tests
   TOP_MODULES Loopback_tb
-  ARGS COVERAGE TRACE_FST
+  ARGS COVERAGE
+  VERILATOR_ARGS -fno-table
 )
 
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain nyu::covrecorder)

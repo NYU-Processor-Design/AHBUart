@@ -1,6 +1,6 @@
 name: Verilator-Test
 
-on: [push, pull_request, workflow_dispatch]
+on: [push, pull_request]
 
 jobs:
   test:
@@ -13,13 +13,13 @@ jobs:
           pacman --noconfirm -S cmake ninja git curl zip unzip tar verilator
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Configure
-        run: cmake . -G Ninja -DNYU_BUILD_TESTS=ON
+        run: cmake . -G Ninja -DCMAKE_BUILD_TYPE=Release -DNYU_BUILD_TESTS=ON
 
       - name: Build
-        run: cmake --build . --config Release
+        run: cmake --build .
 
       - name: Test & Generate Coverage
         run: |
@@ -28,7 +28,7 @@ jobs:
           verilator_coverage -write-info coverage.txt dv/*.dat
 
       - name: Upload Coverage
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           files: ./coverage.txt
           fail_ci_if_error: true
